@@ -9,7 +9,7 @@ type Cpx = Complex<f64>;
 
 pub fn is_local(Cpx { re, im }: Cpx) -> bool {
     // (x - center_x)² + (y - center_y)² < radius².
-    (re * re) + (im * im) <= 1.
+    (re * re) + (im * im) <= 2.
 }
 
 pub fn stability(c: &Cpx) -> Vec<u8> {
@@ -39,8 +39,8 @@ pub fn generate(width: u32, height: u32) -> (u32, u32, Vec<u8>) {
     let xys = xs.zip(ys).collect::<Vec<(i32, i32)>>();
 
     let iter = xys.par_iter().flat_map(move |&(x, y)| {
-        let re = (-1.1 * x as f64) / left_most as f64;
-        let im = (1.1 * y as f64) / top_most as f64;
+        let re = (-2. * x as f64) / left_most as f64;
+        let im = (2. * y as f64) / top_most as f64;
         let cpx = Cpx { re, im };
         stability(&cpx)
     });
@@ -49,7 +49,7 @@ pub fn generate(width: u32, height: u32) -> (u32, u32, Vec<u8>) {
 }
 
 pub fn write_image(filename: &str) -> Result<()> {
-    let (width, height, data) = generate(640, 480);
+    let (width, height, data) = generate(320, 240);
     let file = File::create(filename)?;
 
     PngEncoder::new(file).encode(&data, width, height, ColorType::Rgb8)?;
