@@ -1,0 +1,11 @@
+[package]
+name = "mandelbrot"
+version = "0.1.0"
+authors = ["Art Deineka <art.deineka@darkruby.co.uk>"]
+edition = "2021"
+
+[dependencies]
+num = "0.4"
+image = "0.23"
+rand = "0.8"
+anyhow="*"
